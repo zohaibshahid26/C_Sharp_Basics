@@ -3,6 +3,8 @@ class Program
 {
     static void Main(string[] args)
     {
-        System.Console.WriteLine("Hello, World!");
+        Console.WriteLine("Hello, World!");
+        Console.WriteLine("This is my first C# program!");
+
     }
 }
