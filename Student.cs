@@ -1,5 +1,4 @@
-﻿
-class Student
+﻿class Student
 {
     private string name;
     private int age;
