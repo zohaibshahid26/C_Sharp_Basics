@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -27,11 +28,17 @@ namespace C__Basics
 
 		private string description;
 
+		[JsonIgnore]
 		public string Description
 		{
 			get { return description; }
 			set { description = value; }
 		}
+		//auto implemented properties
+		[JsonIgnore]
+        public decimal Price { get; set; }
+
+        public Store Storex { get; set; }
         public override string ToString()
         {
 			return id + " , " + description + " , " + name;
