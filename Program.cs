@@ -6,10 +6,32 @@ using System.Text.Json.Serialization;
 using Microsoft.Data.SqlClient;
 
 class Program
-
 {
+
     static void Main(string[] args)
     {
+
+        //Lecture 6
+        //int[] data = { 1, 2, 3, 4 };
+        //ArrayList list = new ArrayList();
+        //list.Add(1);
+        //list.Add(2);
+        //list.Add(3);
+
+        //foreach (var x in list)
+        //{
+        //    Console.WriteLine(x);
+
+        //}
+
+
+        /*int i = 10;
+        (int a, string b, float c) t1 = (12, "some value", 34.2f);
+        Console.WriteLine(t1.a);
+        Console.WriteLine(t1.b);
+        Console.WriteLine(t1.c);
+        */
+
 
         //Lecture 5
 
