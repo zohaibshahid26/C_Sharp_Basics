@@ -4,12 +4,57 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.Data.SqlClient;
-
+using System.Data;
 class Program
 {
-
     static void Main(string[] args)
     {
+
+        DataTable PersonTable = new DataTable();
+
+        DataColumn idColumn = new DataColumn("Id", typeof(int));
+        DataColumn nameColumn = new DataColumn("Name", typeof(string));
+
+        idColumn.AutoIncrement = true;
+        idColumn.AutoIncrementSeed = 1;
+        idColumn.AutoIncrementStep = 1;
+
+        PersonTable.Columns.Add(idColumn);
+        PersonTable.Columns.Add(nameColumn);
+
+        PersonTable.PrimaryKey = new DataColumn[] { idColumn };
+
+        DataRow r1 = PersonTable.NewRow();
+        r1["Name"] = "Ali";
+        PersonTable.Rows.Add(r1);
+
+        foreach (DataRow r in PersonTable.Rows)
+        {
+            Console.WriteLine($"id: {r[0]}");
+            Console.WriteLine($"Name: {r[1]}");
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         //Lecture 6
         //int[] data = { 1, 2, 3, 4 };

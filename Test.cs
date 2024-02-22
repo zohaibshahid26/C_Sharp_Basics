@@ -13,18 +13,13 @@ namespace C__Basics
             Console.WriteLine(x);
             Console.WriteLine(y);
             Console.WriteLine(z);
-
         }
-
-
         public void F1(int a, int b = 1, int c = 40)
         {
             Console.WriteLine(a);
             Console.WriteLine(b);
             Console.WriteLine(c);
         }
-
-
         public string MyFunction(int x, out int y)
         {
             y = 12;
