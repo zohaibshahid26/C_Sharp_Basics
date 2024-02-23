@@ -10,6 +10,8 @@ class Program
     static void Main(string[] args)
     {
 
+        //Lecture 7
+
         DataTable PersonTable = new DataTable();
 
         DataColumn idColumn = new DataColumn("Id", typeof(int));
@@ -33,25 +35,6 @@ class Program
             Console.WriteLine($"id: {r[0]}");
             Console.WriteLine($"Name: {r[1]}");
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
