@@ -5,17 +5,19 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Net.Http.Headers;
 class Program
 {
     static void Main(string[] args)
     {
 
-        //Lecture 7
+        //Lecture 7 and 8 
 
         DataTable PersonTable = new DataTable();
 
         DataColumn idColumn = new DataColumn("Id", typeof(int));
         DataColumn nameColumn = new DataColumn("Name", typeof(string));
+        DataColumn ageColumn = new DataColumn("age", typeof(int));
 
         idColumn.AutoIncrement = true;
         idColumn.AutoIncrementSeed = 1;
@@ -23,20 +25,77 @@ class Program
 
         PersonTable.Columns.Add(idColumn);
         PersonTable.Columns.Add(nameColumn);
+        PersonTable.Columns.Add(ageColumn);
 
         PersonTable.PrimaryKey = new DataColumn[] { idColumn };
 
         DataRow r1 = PersonTable.NewRow();
         r1["Name"] = "Ali";
+        r1[2] = 15;
+
         PersonTable.Rows.Add(r1);
 
-        foreach (DataRow r in PersonTable.Rows)
+        DataRow r2 = PersonTable.NewRow();
+        r2["Name"] = "Ibrahim";
+        r2[2] = 5;
+
+        PersonTable.Rows.Add(r2);
+
+        //index based
+        DataRow r3 = PersonTable.Rows[0];
+        Console.WriteLine(r3[0]);
+        Console.WriteLine(r3[1]);
+        Console.WriteLine(r3["age"]);
+
+        //based on primary key
+        DataRow r4 = PersonTable.Rows.Find(2);
+
+        //condition based retrival
+        DataRow[] rows = PersonTable.Select("age >6 OR name like 'I%'");
+
+        foreach (var r in rows)
         {
-            Console.WriteLine($"id: {r[0]}");
-            Console.WriteLine($"Name: {r[1]}");
+            Console.WriteLine($"id {r[0]}, name {r[1]} and age {r[2]}");
         }
+        // update
+        r4["name"] = "usman";
+
+        //delete
+        PersonTable.Rows.Remove(r4);
+
+        DataSet ds = new DataSet();
+        ds.Tables.Add(PersonTable);
 
 
+        DataTable Employee = new DataTable();
+        DataColumn Id = new DataColumn("EmpId", typeof(int));
+        DataColumn name = new DataColumn("Name", typeof(string));
+        DataColumn Pid = new DataColumn("Pid", typeof(int));
+
+
+        Id.AutoIncrement = true;
+        Id.AutoIncrementSeed = 1;
+        Id.AutoIncrementStep = 1;
+
+        Employee.Columns.Add(Id);
+        Employee.Columns.Add(name);
+        Employee.Columns.Add(Pid);
+
+        Employee.PrimaryKey = new DataColumn[] { Id };
+        ds.Tables.Add(Employee);
+
+        DataRelation rel1 = new DataRelation("PersonEmprelation",
+            PersonTable.Columns["id"], Employee.Columns["Pid"]);
+        ds.Relations.Add(rel1);
+
+        DataRow[] rows2 = PersonTable.Rows[0].GetChildRows("PersonEmprelation");
+        DataRow parentrow = Employee.Rows[0].GetParentRow("PersonEmprelation");
+
+        /*DataRow row1 = Employee.NewRow();
+          row1[2] = 1;//setting foreign key column
+          row1[1] = "Ahmad";
+          Employee.Rows.Add(row1);
+        */
 
 
         //Lecture 6

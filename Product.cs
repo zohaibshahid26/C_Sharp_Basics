@@ -38,12 +38,7 @@ namespace C__Basics
         [JsonIgnore]
         public decimal Price { get; set; }
 
-        public Store Storex { get; set; }
-        public override string ToString()
-        {
-            return id + " , " + description + " , " + name;
 
-        }
 
     }
 }
