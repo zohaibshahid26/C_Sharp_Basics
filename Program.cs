@@ -5,11 +5,13 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.Data.SqlClient;
 using System.Data;
-using System.Net.Http.Headers;
+
 class Program
 {
     static void Main(string[] args)
     {
+        //Lecture 9
+
         SqlDataAdapter da = new SqlDataAdapter();
 
         string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=MyDB;Integrated Security=True;";
@@ -29,6 +31,7 @@ class Program
         insertCMD.Parameters.Add(p2);
         insertCMD.Parameters.Add(p3);
         da.InsertCommand = insertCMD;
+
         // update
         string updateQuery = $"update myusers set username=@user, password=@pass where id=@id";
         SqlParameter p4 = new SqlParameter("id", SqlDbType.Int, 0, "Id");
@@ -40,12 +43,15 @@ class Program
         updateCMD.Parameters.Add(p6);
         da.UpdateCommand = updateCMD;
 
+        //delete
+        string deleteQuery = "delete from myusers where id=@id";
+        SqlParameter p7 = new SqlParameter("id", SqlDbType.Int, 0, "Id");
+        SqlCommand deleteCMD = new SqlCommand(deleteQuery, connection);
+        deleteCMD.Parameters.Add(p7);
+        da.DeleteCommand = deleteCMD;
 
-
-        DataTable userTable = new DataTable();
-
+        DataTable userTable = new DataTable("myusers");
         da.Fill(userTable);
-
 
         foreach (DataRow row in userTable.Rows)
         {
@@ -53,20 +59,10 @@ class Program
 
         }
 
-
         DataRow rowToUpdate = userTable.Rows[0];
         rowToUpdate["username"] = "usman";
 
-
-
-
         da.Update(userTable);
-
-
-
-
-
-
 
 
 
