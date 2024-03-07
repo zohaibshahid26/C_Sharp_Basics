@@ -10,7 +10,67 @@ class Program
 {
     static void Main(string[] args)
     {
+        SqlDataAdapter da = new SqlDataAdapter();
 
+        string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=MyDB;Integrated Security=True;";
+        SqlConnection connection = new SqlConnection(connectionString);
+        //select Command
+        string selectQuery = "select * from myusers";
+        SqlCommand selectCMD = new SqlCommand(selectQuery, connection);
+        da.SelectCommand = selectCMD;
+
+        //insert Command
+        string insertQuery = "insert into myusers (id, username,password) values(@i,@u,@p)";
+        SqlParameter p1 = new SqlParameter("i", SqlDbType.Int, 0, "Id");
+        SqlParameter p2 = new SqlParameter("u", SqlDbType.NChar, 10, "username");
+        SqlParameter p3 = new SqlParameter("p", SqlDbType.NChar, 10, "password");
+        SqlCommand insertCMD = new SqlCommand(insertQuery, connection);
+        insertCMD.Parameters.Add(p1);
+        insertCMD.Parameters.Add(p2);
+        insertCMD.Parameters.Add(p3);
+        da.InsertCommand = insertCMD;
+        // update
+        string updateQuery = $"update myusers set username=@user, password=@pass where id=@id";
+        SqlParameter p4 = new SqlParameter("id", SqlDbType.Int, 0, "Id");
+        SqlParameter p5 = new SqlParameter("user", SqlDbType.NChar, 10, "username");
+        SqlParameter p6 = new SqlParameter("pass", SqlDbType.NChar, 10, "password");
+        SqlCommand updateCMD = new SqlCommand(updateQuery, connection);
+        updateCMD.Parameters.Add(p4);
+        updateCMD.Parameters.Add(p5);
+        updateCMD.Parameters.Add(p6);
+        da.UpdateCommand = updateCMD;
+
+
+
+        DataTable userTable = new DataTable();
+
+        da.Fill(userTable);
+
+
+        foreach (DataRow row in userTable.Rows)
+        {
+            Console.WriteLine($" {row[0]}, {row[1]}, {row[2]}");
+
+        }
+
+
+        DataRow rowToUpdate = userTable.Rows[0];
+        rowToUpdate["username"] = "usman";
+
+
+
+
+        da.Update(userTable);
+
+
+
+
+
+
+
+
+
+        /*
         //Lecture 7 and 8 
 
         DataTable PersonTable = new DataTable();
@@ -60,12 +120,12 @@ class Program
         // update
         r4["name"] = "usman";
 
+
         //delete
         PersonTable.Rows.Remove(r4);
 
         DataSet ds = new DataSet();
         ds.Tables.Add(PersonTable);
-
 
         DataTable Employee = new DataTable();
         DataColumn Id = new DataColumn("EmpId", typeof(int));
