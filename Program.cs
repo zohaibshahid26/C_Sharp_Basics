@@ -61,6 +61,10 @@ class Program
 
         DataRow rowToUpdate = userTable.Rows[0];
         rowToUpdate["username"] = "usman";
+        rowToUpdate["password"] = "1234";
+
+        DataRow rowToDelete = userTable.Rows[1];
+        rowToDelete.Delete();
 
         da.Update(userTable);
 
